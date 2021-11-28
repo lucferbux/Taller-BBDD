@@ -46,8 +46,16 @@ const Dashboard = () => {
       removeLastNotification();
     }
 
+    
+
     retrieveInfo();
   }, [setResponse, t, addNotification, removeLastNotification]);
+
+  function deleteProject(element: React.MouseEvent<HTMLElement>, id: string) {
+    element.preventDefault()
+    element.stopPropagation()
+    // TODO: Call to delete project
+  }   
 
   return (
     <Wrapper>
@@ -59,7 +67,7 @@ const Dashboard = () => {
             </AboutMeWrapper>
             <ProjectWrapper>
               {response?.projects?.map((project, index) => (
-                <ProjectCard project={project} key={index} />
+                <ProjectCard project={project} key={index} closeButton={(e, id) => deleteProject(e, id)} />
               ))}
             </ProjectWrapper>
           </ResponseWrapper>

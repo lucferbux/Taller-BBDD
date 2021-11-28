@@ -1,6 +1,6 @@
-# Proyecto Web - Backend + Front
+# Proyecto Web - Backend + Front + BBDD
 
-![Frontend](./doc/frontend.svg)
+![Frontend](./doc/BBDD.svg)
 
 ## Prototipo
 
@@ -10,106 +10,78 @@ Además, como se enseñará en el propio proyecto, podemos ver el prototipo fina
 
 ## Setup
 
-Para poner en marcha el proyecto tenemos que seguir los siguientes pasos:
-
-1. Añadir los paquetes con ```npm install````
-
-2. Crear una sesión de desarrollo con ```npm run start````
-
-3. Si queremos la webapp compilada, solo tendremos que ejecutar ```npm run build```
-
+Para poner en marcha el proyecto tenemos que seguir los pasos detallados en el [CONTRIBUTING.md](CONTRIBUTING.MD)
 
 ## Tecnologías
 
-Este proyecto cuenta con las siguientes tecnologías, se pueden consultar dentro del prototipo final.
+Este proyecto cuenta con las siguientes tecnologías, que se encuentran dentro del prototipo.
 
-* React - https://reactjs.org/docs/hello-world.html
-* Create React App - https://create-react-app.dev
-* Styled Components - https://styled-components.com
-* Internationalization - https://react.i18next.com
-* Lottie - https://lottiefiles.com/blog/working-with-lottie/how-to-use-lottie-in-react-app
-* React Router - https://reactrouter.com/web/guides/quick-start
-* Typescript - https://www.typescriptlang.org
-* Swagger - https://swagger.io
-* Figma - https://www.figma.com
+### UI
 
+* [React](https://reactjs.org/docs/hello-world.html)
+* [Create React App](https://create-react-app.dev)
+* [Styled Components](https://styled-components.com)
+* [Internationalization](https://react.i18next.com)
+* [Lottie](https://lottiefiles.com/blog/working-with-lottie/how-to-use-lottie-in-react-app)
+* [React Router](https://reactrouter.com/web/guides/quick-start)
+* [Typescript](https://www.typescriptlang.org)
+* [Swagger](https://swagger.io)
+* [Figma](https://www.figma.com)
+* [JWT](https://jwt.io)
+* [Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+* [DotEnv](https://github.com/motdotla/dotenv)
 
-# Node.js Express API with TypeScript 3
-> Node.js Express API with TypeScript 3. Supports MongoDB
+### Backend
 
-## Description
-This skeleton will help you to build your own Node.js Express Mongodb API using TypeScript 3.
+* [Node](https://nodejs.org/en/)
+* [JWT](https://jwt.io)
+* [Typescript](https://www.typescriptlang.org)
+* [Swagger](https://app.swaggerhub.com/apis/lucferbux/ThreePoints/1.0.0)
+* [Express Router](https://expressjs.com/en/guide/routing.html)
+* [DotEnv](https://github.com/motdotla/dotenv)
 
-### Project Introduction
-- suppot ES6/ES7 features
-- using tslint followed [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+### BBDD
 
-## Features
-##### Authentication:
-- jwt authentication
-##### Session Storage:
-- MongoDB
-##### Integration testing
-- mocha
-- chai
-- supertest
+* [MongoDB](https://www.mongodb.com)
+* [Mongoose](https://mongoosejs.com)
 
-## Requirements
+### Swagger
 
-- node >= 10
-- npm >= 6
-- mongodb >= 3.0
-- typescript >= 3.0
+Swagger es una especificación de la API que vamos a utilizar en el proyecto, permite conocer las rutas, su configuración de roles y el modelo de datos. Existe una [live version](https://app.swaggerhub.com/apis/lucferbux/ThreePoints/1.0.0) configurada, pero nuestro propio backend soporta la especificación.
 
-## Running the API
-### Development
-To start the application in development mode, run:
+![swagger-spec](./doc/swagger.png)
+
+La documentación se encuentra en la ruta:
 
 ```bash
-npm install
+[NodeRoute]/docs
+Default -> http://localhost:4000/docs
 ```
 
-Start the application in dev env:
-```
-npm run dev
-```
-Start the application in production env:
+### JWT
 
-Install ts pm2 and typescript compiler:
-```
-npm install -g pm2
-pm2 install typescript
-```
+JWT es una especificación de Autenticación que se utiliza sobre todo para control de autenticación entre dos actores. Se introdujo con la especificación [RFC 7519](https://tools.ietf.org/html/rfc7519) por el IEFT.
 
-example start with scale on 2 core:
-```
-pm2 start ./src/index.ts -i 2 --no-daemon
-```
-or
-```
-npm run build
-pm2 start ./build/index.js
-```
+Aunque se puede usar con todo tipo de comunicaciones, JWT es muy popular para el control de autenticación y autorización mediante HTTP, es por ello que lo hemos introducido en nuestra API.
 
-Express server listening on http://localhost:3000/, in development mode
-The developer mode will watch your changes then will transpile the TypeScript code and re-run the node application automatically.
+HTTP es un protocolo sin estado, es por ello que el servidor no tiene control sobre peticiones anteriores para el cliente, es por ello que tener un token que controle la sesión entre cliente y servidor con un flujo controlado hace que podamos autenticar y contorlar algunas rutas sensibles dentro de una sesión.
 
-### Testing
-To run integration tests: 
+![JWT Auth](./doc/jwt.svg)
+
+La **estructura de un JWT** es la siguiente: Se compone de información codificada en Base64 con una cabecera, un payload y una firma única. Dentro de la página oficial de [https://jwt.io](jwt) podemos comprobar un token.
+
+![JWT Structure](./doc/jwt-structure.png)
+
+La cabecera tiene información acerca del algoritomo que se usa y que tipo de token, el payload contiene datos acerca del usuario y su rol y la firma se utiliza para validar la veracidad de este token.
+
+### Scripts BBDD
+
+Para inicializar el proyecto con datos iniciales, utilizamos la importación de estrucutras **json** dentro de **MongoDB**. Para ello usamos el comando `mongoimport --jsonArray` con el que importaremos los json creados. El código usado es el siguiente.
+
 ```bash
-npm test
+mongoimport --jsonArray --db portfolio_db --collection users --file mockUsername.json
+mongoimport --jsonArray --db portfolio_db --collection profile --file mockProfile.json
+mongoimport --jsonArray --db portfolio_db --collection projects --file mockProjects.json
 ```
 
-## Set up environment
-In root folder you can find `.env`. You can use this config or change it for your purposes.
-If you want to add some new variables, you also need to add them to interface and config object (Look `src/config/index.ts`)
-
-## Swagger
-```bash
-npm install -g swagger-jsdoc
-swagger-jsdoc -d swaggerDef.js -o swagger.json
-```
-Swagger documentation will be available on route: 
-```bash
-http://localhost:3000/docs
-```
+Como podéis comprobar, los ficheros `mockProfile.json`, `mockProjects.json`y `mockUsername.json`. Cambiando los datos allí, e importando los nuevos ficheros, tendremos los cambios reflejados en nuestro documento.

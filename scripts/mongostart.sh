@@ -1,4 +1,10 @@
-echo "You must install MongoDB First, instructions here: https://docs.mongodb.com/manual/installation/"
+RED='\033[0;31m'
+NC='\033[0m'
+echo ""
+echo "${RED} ******************************************************************************************************************"
+echo "${RED} If not installed, you must install MongoDB first, instructions here: https://docs.mongodb.com/manual/installation/"
+echo "${RED} ******************************************************************************************************************"
+echo "${NC}"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     sudo service mongod start
