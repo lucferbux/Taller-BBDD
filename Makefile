@@ -1,3 +1,4 @@
+# Init Scripts
 .PHONY: dev-api
 dev-api:
 	cd backend && npm run dev
@@ -6,6 +7,11 @@ dev-api:
 dev-ui:
 	cd ui && npm run start
 
+.PHONY: dev-start
+dev-start: 
+	make -j 3 mongo-start dev-api dev-ui
+
+# DB Scripts
 .PHONY: dev-populate-data
 dev-populate-data:
 	cd scripts && ./mongoimport.sh
@@ -17,3 +23,24 @@ dev-deleve-data:
 .PHONY: mongo-start
 mongo-start:
 	cd scripts && ./mongostart.sh
+
+.PHONY: mongo-export
+mongo-export:
+	cd scripts && ./mongoexport.sh
+
+
+.PHONY: dev-bbdd-start-populate
+dev-bbdd-start-populate: mongo-start dev-populate-data
+
+
+# Installation scripst
+.PHONY: install-ui
+install-ui:
+	cd ui && npm install
+
+.PHONY: install-backend
+install-backend:
+	cd backend && npm install
+
+.PHONY: install-dependencies
+install-dependencies: install-ui install-backend
