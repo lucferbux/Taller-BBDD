@@ -103,14 +103,14 @@ const MenuDropDown = styled.div`
   top: 46px;
   
   border-radius: 2px;
-  background-color: ${themes.light.backgroundColor};
+  background-color: ${themes.light.card.backgroundColorFull};
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   z-index: 2;
 
   @media (prefers-color-scheme: dark) {
-    background-color: ${themes.dark.backgroundColor};
+    background-color: ${themes.dark.card.backgroundColorFull};
   }
   
 `;
@@ -198,6 +198,7 @@ const TagText = styled(SmallText)`
 `;
 
 const CardWrapper = styled.div`
+  ${themes.light.card}
   transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
   position: relative;
   display: grid;
@@ -209,15 +210,10 @@ const CardWrapper = styled.div`
   backdrop-filter: blur(40px);
   border-radius: 20px;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.4);
-  box-shadow: rgb(24 32 79 / 25%) 0px 40px 80px,
-    rgb(255 255 255 / 50%) 0px 0px 0px 0.5px inset;
   animation: fadein 0.4s;
 
   @media (prefers-color-scheme: dark) {
-    box-shadow: rgb(24 32 79 / 25%) 0px 40px 80px,
-      rgb(255 255 255 / 50%) 0px 0px 0px 0.5px inset;
-    background: rgba(0, 0, 0, 0.4);
+    ${themes.dark.card};
     color: ${themes.dark.text1};
   }
 
