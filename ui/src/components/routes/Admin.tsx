@@ -24,18 +24,17 @@ const Admin = () => {
   let timeoutId: NodeJS.Timeout | null = null;
 
   useEffect(() => {
-    console.log(project);
     if (project) {
       fillUpForm(project);
     }
 
     return () => {
+      setProjectOrUndefined(undefined);
       if (timeoutId) {
         clearTimeout(timeoutId);
-        setProjectOrUndefined(undefined);
       }
     };
-   }, [timeoutId, setProjectOrUndefined, project]);
+  }, [timeoutId, setProjectOrUndefined, project]);
 
   async function postProject(event: FormEvent<HTMLFormElement>) {
     dismissError();
@@ -46,22 +45,26 @@ const Admin = () => {
     }
     const api = createApiClient();
     try {
-      const project: Project = {
-        id: generateUUID(),
+      const projectCreation: Project = {
+        id: project ? project.id : generateUUID(),
         title: title,
         description: description,
         link: link,
         tag: tags,
         version: version,
-        timestamp: Date.now(),
+        timestamp: project ? project.date : Date.now(),
       };
       addNotification("Posting...");
-      await api.postProject(project);
+      if (project) {
+        // TODO: update project
+      } else {
+        await api.postProject(projectCreation);
+      }
       resetForm();
       setSuccessMsg(t("admin.suc_network"));
-      timeoutId = setTimeout(() => {setSuccessMsg("")}, 2000);
-      console.log(timeoutId);
-      console.log("llegamos aqui");
+      timeoutId = setTimeout(() => {
+        setSuccessMsg("");
+      }, 2000);
     } catch (e) {
       setErrorMsg(t("admin.err_network"));
     } finally {
@@ -71,8 +74,8 @@ const Admin = () => {
 
   function generateUUID(): string {
     return Math.floor((1 + Math.random()) * 0x100000000000)
-    .toString(16)
-    .substring(1);
+      .toString(16)
+      .substring(1);
   }
 
   function fillUpForm(project: Project) {

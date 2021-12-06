@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import {useState, useCallback} from 'react';
 
 const useToggle = (initialState: Boolean) => {
     // Use this react hook to avoid re renders when togglin a react state
