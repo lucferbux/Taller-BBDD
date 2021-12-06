@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import useAuth from "../../hooks/useAuth";
+import useToggle from "../../hooks/useToogle";
 import { Project } from "../../model/project";
 import { themes } from "../../styles/ColorStyles";
 import {
@@ -14,12 +15,21 @@ import codeIcon from "./code.svg";
 interface ProjectCardProps {
   project: Project;
   closeButton: (element: React.MouseEvent<HTMLElement>, id: string) => void;
+  updateButton: (element: React.MouseEvent<HTMLElement>, id: string) => void;
   captionText?: string;
 }
 
 const ProjectCard = (props: ProjectCardProps) => {
   const { project } = props;
   const { user } = useAuth();
+
+  const [isVisible, toggle] = useToggle(false);
+
+  const toggleMenu = (element: React.MouseEvent<HTMLElement>) => {
+    element.preventDefault();
+    element.stopPropagation();
+    toggle();
+  };
 
   return (
     <Wrapper href={project.link} target="_blank" rel="noopener">
@@ -28,10 +38,25 @@ const ProjectCard = (props: ProjectCardProps) => {
           <CardVersion>
             <CardVersionText>{project.version}</CardVersionText>
           </CardVersion>
-          { user && 
-            <CardCloseButton onClick={(e: React.MouseEvent<HTMLElement>) => props.closeButton(e, project.id)}>✖</CardCloseButton>
-          }
+          {user && (
+            <KebabButton
+              onClick={(e: React.MouseEvent<HTMLElement>) => toggleMenu(e)}
+            >
+              <KebabDot />
+              <KebabDot />
+              <KebabDot />
+            </KebabButton>
+          )}
         </CardInfo>
+        {user && isVisible && 
+            <>
+            <MenuDropDownOverlay onClick={toggleMenu}/>
+            <MenuDropDown>
+            <MenuDropDownItem isWarning={false} onClick={(e: React.MouseEvent<HTMLElement>) => props.updateButton(e, project.id)}>Update</MenuDropDownItem>
+            <MenuDropDownItem isWarning={true} onClick={(e: React.MouseEvent<HTMLElement>) => props.closeButton(e, project.id)}>Delete</MenuDropDownItem>
+            </MenuDropDown>
+            </>
+        }
         <CardCaption data-testid="caption">
           {props.captionText ? props.captionText : ""}
         </CardCaption>
@@ -53,22 +78,64 @@ export default ProjectCard;
 
 const CardCaption = styled(SmallText2)``;
 
-const CardCloseButton = styled.button`
-    background: ${themes.light.warning};
-    color: ${themes.dark.text1};
-    border-radius: 30px;
-    border: none;
-    margin-left: 10px;
+const KebabButton = styled.button`
+  border: none;
+  background: none;
+  margin-left: 10px;
+  cursor: pointer;
+`;
 
-    transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
-    cursor: pointer;
+const KebabDot = styled.div`
+  width: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background: ${themes.dark.text1};
+  margin: 2px 0;
+`;
 
-    :hover {
-      transform: scale(1.4);
-    }
-    :active {
-      transform: scale(1.2);
-    }
+const MenuDropDown = styled.div`
+  position: absolute;
+  right: 26px;
+  top: 46px;
+  
+  border-radius: 2px;
+  background-color: ${themes.light.backgroundColor};
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: ${themes.dark.backgroundColor};
+  }
+  
+`;
+
+const MenuDropDownOverlay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0;
+`;
+
+interface MenuDropDownItemProps {
+  isWarning: Boolean;
+}
+
+const MenuDropDownItem = styled.button<MenuDropDownItemProps>`
+  height: 26px;
+  width: 100px;
+  border: none;
+  background: none;
+  margin: 6px 0px;
+  cursor: pointer;
+  color: ${(props) => (props.isWarning ? themes.light.warning : themes.light.text1)};
+
+  @media (prefers-color-scheme: dark) {
+    color: ${(props) => (props.isWarning ? themes.light.warning : themes.dark.text1)};
+  }
+
 `;
 
 const CardInfo = styled.div`
@@ -82,6 +149,10 @@ const CardVersion = styled.div`
   background: rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   padding: 2px 6px;
+
+  @media (prefers-color-scheme: dark) {
+    background: rgba(255, 255, 255, 0.2);
+  }
 `;
 
 const CardVersionText = styled(SmallText2)``;

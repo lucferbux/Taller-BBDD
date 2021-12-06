@@ -57,6 +57,12 @@ const Dashboard = () => {
     // TODO: Call to delete project
   }   
 
+  function updateProject(element: React.MouseEvent<HTMLElement>, id: string) {
+    element.preventDefault()
+    element.stopPropagation()
+    // TODO: Call to update project
+  }   
+
   return (
     <Wrapper>
       <ContentWrapper>
@@ -67,7 +73,7 @@ const Dashboard = () => {
             </AboutMeWrapper>
             <ProjectWrapper>
               {response?.projects?.map((project, index) => (
-                <ProjectCard project={project} key={index} closeButton={(e, id) => deleteProject(e, id)} />
+                <ProjectCard project={project} key={index} closeButton={(e, id) => deleteProject(e, id)} updateButton={(e, id) => updateProject(e, id)} />
               ))}
             </ProjectWrapper>
           </ResponseWrapper>
