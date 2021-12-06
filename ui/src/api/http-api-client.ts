@@ -144,6 +144,7 @@ export default class HttpApiClient implements ApiClient {
       return response.json();
     }
 
+    // TODO: 2) Add updateProject using PUT method
     async updateProject(project: Project): Promise<ProjectResponse> {
       const response = await fetch(this.baseUrl + "/v1/projects", {
         method: "PUT",
@@ -160,6 +161,7 @@ export default class HttpApiClient implements ApiClient {
       return response.json();
     }
 
+    // TODO: 2) Add updateProject using DELETE method
     async deleteProject(projectId: string): Promise<ProjectResponse> {
       const response = await fetch(this.baseUrl + "/v1/projects", {
         method: "DELETE",
