@@ -15,7 +15,10 @@ import codeIcon from "./code.svg";
 interface ProjectCardProps {
   project: Project;
   closeButton: (element: React.MouseEvent<HTMLElement>, id: string) => void;
-  updateButton: (element: React.MouseEvent<HTMLElement>, project: Project) => void;
+  updateButton: (
+    element: React.MouseEvent<HTMLElement>,
+    project: Project
+  ) => void;
   captionText?: string;
 }
 
@@ -48,15 +51,30 @@ const ProjectCard = (props: ProjectCardProps) => {
             </KebabButton>
           )}
         </CardInfo>
-        {user && isVisible && 
-            <>
-            <MenuDropDownOverlay onClick={toggleMenu}/>
+        {user && isVisible && (
+          <>
+            <MenuDropDownOverlay onClick={toggleMenu} />
             <MenuDropDown>
-            <MenuDropDownItem isWarning={false} onClick={(e: React.MouseEvent<HTMLElement>) => props.updateButton(e, project)}>Update</MenuDropDownItem>
-            <MenuDropDownItem isWarning={true} onClick={(e: React.MouseEvent<HTMLElement>) => props.closeButton(e, project.id)}>Delete</MenuDropDownItem>
+              <MenuDropDownItem
+                isWarning={false}
+                onClick={(e: React.MouseEvent<HTMLElement>) =>
+                  props.updateButton(e, project)
+                }
+              >
+                Update
+              </MenuDropDownItem>
+              <MenuDropDownItem
+                isWarning={true}
+                onClick={(e: React.MouseEvent<HTMLElement>) => {
+                  props.closeButton(e, project._id ?? "");
+                  toggle();
+                }}
+              >
+                Delete
+              </MenuDropDownItem>
             </MenuDropDown>
-            </>
-        }
+          </>
+        )}
         <CardCaption data-testid="caption">
           {props.captionText ? props.captionText : ""}
         </CardCaption>
@@ -101,7 +119,7 @@ const MenuDropDown = styled.div`
   position: absolute;
   right: 26px;
   top: 46px;
-  
+
   border-radius: 2px;
   background-color: ${themes.light.card.backgroundColorFull};
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -112,7 +130,6 @@ const MenuDropDown = styled.div`
   @media (prefers-color-scheme: dark) {
     background-color: ${themes.dark.card.backgroundColorFull};
   }
-  
 `;
 
 const MenuDropDownOverlay = styled.div`
@@ -134,12 +151,13 @@ const MenuDropDownItem = styled.button<MenuDropDownItemProps>`
   background: none;
   margin: 6px 0px;
   cursor: pointer;
-  color: ${(props) => (props.isWarning ? themes.light.warning : themes.light.text1)};
+  color: ${(props) =>
+    props.isWarning ? themes.light.warning : themes.light.text1};
 
   @media (prefers-color-scheme: dark) {
-    color: ${(props) => (props.isWarning ? themes.light.warning : themes.dark.text1)};
+    color: ${(props) =>
+      props.isWarning ? themes.light.warning : themes.dark.text1};
   }
-
 `;
 
 const CardInfo = styled.div`

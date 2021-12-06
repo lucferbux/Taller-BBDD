@@ -23,7 +23,6 @@ class AboutMeValidation extends Validation {
      */
     createAboutMe(params: IAboutMeModel): Joi.ValidationResult<IAboutMeModel> {
         const schema: Joi.ObjectSchema = Joi.object().keys({
-            id: Joi.string().required(),
             name: Joi.string().required(),
             birthday: Joi.number().optional(),
             nationality: Joi.string().optional(),

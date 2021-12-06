@@ -56,10 +56,18 @@ const Dashboard = () => {
     retrieveInfo();
   }, [setResponse, t, addNotification, removeLastNotification]);
 
-  function deleteProject(element: React.MouseEvent<HTMLElement>, id: string) {
+  async function deleteProject(element: React.MouseEvent<HTMLElement>, id: string) {
     element.preventDefault()
     element.stopPropagation()
-    // TODO: Call to delete project
+    const api = createApiClient();
+    try {
+      await api.deleteProject(id);
+      const projects: Project[] = await api.getProjects();
+      const aboutme: AboutMe = await api.getAboutMe();
+      setResponse({ aboutme, projects });
+    } catch (e) {
+      console.log("Error deleting project", e);
+    }
   }   
 
   function updateProject(element: React.MouseEvent<HTMLElement>, project: Project) {

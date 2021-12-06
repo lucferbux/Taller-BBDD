@@ -27,6 +27,7 @@
         "err_invalid_form": "Elementos no pueden estar vacíos",
         "err_network": "Error publicando el Proyecto",
         "suc_network": "Proyecto publicado",
+        "suc_network_update": "Proyecto actualizado",
         "header": "Project Input",
         "input_title": "Título",
         "input_description": "Descripción",

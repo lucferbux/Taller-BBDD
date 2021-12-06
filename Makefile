@@ -17,7 +17,7 @@ dev-populate-data:
 	cd scripts && ./mongoimport.sh
 
 .PHONY: dev-delete-data
-dev-deleve-data:
+dev-delete-data:
 	cd scripts && ./mongodelete.sh
 
 .PHONY: mongo-start

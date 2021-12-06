@@ -23,7 +23,6 @@ class ProjectsValidation extends Validation {
      */
     createProject(params: IProjectsModel): Joi.ValidationResult<IProjectsModel> {
         const schema: Joi.ObjectSchema = Joi.object().keys({
-            id: Joi.string().required(),
             title: Joi.string().required(),
             description: Joi.string().optional(),
             version: Joi.string().optional(),

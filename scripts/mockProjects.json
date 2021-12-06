@@ -1,6 +1,5 @@
 [
     {
-        "id": "12349as8df90",
         "title": "React",
         "description": "React es el Framework web basado en componentes de Facebook. Cuenta con una curva de aprendizaje corta y mucha flexibilidad",
         "version": "17.0.1",
@@ -9,7 +8,6 @@
         "timestamp": 765817712000
     },
     {
-        "id": "789asdfas89",
         "title": "Create React App",
         "description": "Toolchain para la creación de proyectos basados en React, contiene lo báisco para crear proyectos basados en single-page apps",
         "version": "4.0.3",
@@ -18,7 +16,6 @@
         "timestamp": 765817712001
     },
     {
-        "id": "56765asdfasdf8",
         "title": "Styled components",
         "description": "Librería que permite usar template literals y css para crear estilos en componente con JavaScript",
         "version": "5.2.1",
@@ -27,7 +24,6 @@
         "timestamp": 765817712002
     },
     {
-        "id": "0asdf5a778s8df",
         "title": "React i18next",
         "description": "Internacionalización de nuestro proyecto en React.",
         "version": "19.9.2",
@@ -36,7 +32,6 @@
         "timestamp": 765817712003
     },
     {
-        "id": "25634iuoasdf8",
         "title": "React Lottie",
         "description": "Animaciones en alta calidad que cuentan con distintos tipos de reproducción.",
         "version": "1.2.3",
@@ -45,7 +40,6 @@
         "timestamp": 765817712004
     },
     {
-        "id": "7890asdf890",
         "title": "React Router",
         "description": "Navegación entre páginas dentro de nuestra web app.",
         "version": "5.2.0",
@@ -54,7 +48,6 @@
         "timestamp": 765817712005
     },
     {
-        "id": "78fas7df98",
         "title": "Swagger",
         "description": "Herramienta para creación de especificaciones OpenAPI",
         "version": "3.0,2",
@@ -63,7 +56,6 @@
         "timestamp": 765817712006
     },
     {
-        "id": "66sdf78sdf98",
         "title": "Figma",
         "description": "Herramienta de diseño vectorial y prototipado",
         "version": "-",
@@ -72,7 +64,6 @@
         "timestamp": 765817712007
     },
     {
-        "id": "5a6sdf76sd",
         "title": "JWT",
         "description": "Estandar de autenticacion muy popular en APIs",
         "version": "6.1.0",
@@ -81,7 +72,6 @@
         "timestamp": 765817712008
     },
     {
-        "id": "567d5fs76d",
         "title": "Express Router",
         "description": "Web Framework para Node.js que controla la navegación de la webapp",
         "version": "4.17.1",
@@ -90,7 +80,6 @@
         "timestamp": 765817712009
     },
     {
-        "id": "3454asdf567s",
         "title": "DotEnv",
         "description": "Herramienta gestión de variables entorno y su carga dinámica",
         "version": "10.0.0",
@@ -99,7 +88,6 @@
         "timestamp": 765817712010
     },
     {
-        "id": "12390asdfasdfk",
         "title": "Mongoose",
         "description": "Librería de express para modelado de objetos mongodb",
         "version": "6.0.13",
@@ -108,7 +96,6 @@
         "timestamp": 765817712011
     },
     {
-        "id": "hk2348sdf909d0",
         "title": "MongoDB",
         "description": "Base de Datos No Relacional orientado a documentos",
         "version": "10.0.0",

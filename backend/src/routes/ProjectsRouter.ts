@@ -13,6 +13,8 @@ router.post('/', jwtConfig.isAuthenticated, ProjectsComponent.create)
 
 // TODO: Create a delete route
 
+router.put('/', jwtConfig.isAuthenticated, ProjectsComponent.update)
+
 router.delete('/', jwtConfig.isAuthenticated, ProjectsComponent.remove)
 
 /**

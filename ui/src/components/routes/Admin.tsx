@@ -46,7 +46,7 @@ const Admin = () => {
     const api = createApiClient();
     try {
       const projectCreation: Project = {
-        id: project ? project.id : generateUUID(),
+        _id: project ? project._id : undefined,
         title: title,
         description: description,
         link: link,
@@ -56,26 +56,28 @@ const Admin = () => {
       };
       addNotification("Posting...");
       if (project) {
-        // TODO: update project
+        await api.updateProject(projectCreation);
       } else {
         await api.postProject(projectCreation);
       }
-      resetForm();
-      setSuccessMsg(t("admin.suc_network"));
+      if(project) {
+        setSuccessMsg(t("admin.suc_network_update"));
+      } else {
+        setSuccessMsg(t("admin.suc_network"));
+      }  
       timeoutId = setTimeout(() => {
         setSuccessMsg("");
       }, 2000);
     } catch (e) {
       setErrorMsg(t("admin.err_network"));
+      timeoutId = setTimeout(() => {
+        setErrorMsg("");
+      }, 2000);
     } finally {
       removeLastNotification();
+      resetForm();
+      setProjectOrUndefined(undefined);
     }
-  }
-
-  function generateUUID(): string {
-    return Math.floor((1 + Math.random()) * 0x100000000000)
-      .toString(16)
-      .substring(1);
   }
 
   function fillUpForm(project: Project) {
