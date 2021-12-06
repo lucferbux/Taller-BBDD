@@ -9,8 +9,7 @@ import ProjectCard from "../cards/ProjectCard";
 import { themes } from "../../styles/ColorStyles";
 import { MediumText } from "../../styles/TextStyles";
 import createApiClient from "../../api/api-client-factory";
-import useProject from "../../hooks/useProject";
-import { useHistory } from "react-router";
+
 
 interface Response {
   aboutme?: AboutMe;
@@ -23,9 +22,7 @@ const Dashboard = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   
   const { addNotification, removeLastNotification } = useApp();
-  // TODO: 4) Llama al hook useProject
-  const { setProjectOrUndefined } = useProject();
-  const history = useHistory();
+  // TODO: 4) Llama al hook useProject 
 
   useEffect(() => {
     async function retrieveInfo() {
@@ -59,30 +56,12 @@ const Dashboard = () => {
 
   // TODO: 4) Crea la función deleteProject
   // HINT: el primer argumento debería ser element: React.MouseEvent<HTMLElement> para así llara a element.preventDefault() y element.stopPropagation()
-  // HINT: Además de eliminar el proyecto, hay que refrescar la interfaz de React
-  async function deleteProject(element: React.MouseEvent<HTMLElement>, id: string) {
-    element.preventDefault()
-    element.stopPropagation()
-    const api = createApiClient();
-    try {
-      await api.deleteProject(id);
-      const projects: Project[] = await api.getProjects();
-      const aboutme: AboutMe = await api.getAboutMe();
-      setResponse({ aboutme, projects });
-    } catch (e) {
-      console.log("Error deleting project", e);
-    }
-  }   
+  // HINT: Además de eliminar el proyecto, hay que refrescar la interfaz de React 
 
   // TODO: 4) Crea la función deleteProject
   // HINT: el primer argumento debería ser element: React.MouseEvent<HTMLElement> para así llara a element.preventDefault() y element.stopPropagation()
   // HINT: Además de añadir el proyecto al contexto, habrá que navegar a /admin de forma programática
-  function updateProject(element: React.MouseEvent<HTMLElement>, project: Project) {
-    element.preventDefault()
-    element.stopPropagation()
-    setProjectOrUndefined(project);
-    history.push("/admin");
-  }   
+ 
 
   return (
     <Wrapper>
@@ -94,7 +73,8 @@ const Dashboard = () => {
             </AboutMeWrapper>
             <ProjectWrapper>
               {response?.projects?.map((project, index) => (
-                <ProjectCard project={project} key={index} closeButton={(e, id) => deleteProject(e, id)} updateButton={(e, id) => updateProject(e, id)} />
+                // TODO: 4, Actualiza project card para añadir los props
+                <ProjectCard project={project} key={index} />
               ))}
             </ProjectWrapper>
           </ResponseWrapper>
