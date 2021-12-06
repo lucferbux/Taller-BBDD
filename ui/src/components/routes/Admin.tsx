@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import createApiClient from "../../api/api-client-factory";
 import useApp from "../../hooks/useApp";
+import useProject from "../../hooks/useProject";
 import { Project } from "../../model/project";
 import { themes } from "../../styles/ColorStyles";
 import { Caption, H1 } from "../../styles/TextStyles";
@@ -18,20 +19,23 @@ const Admin = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [sucessMsg, setSuccessMsg] = useState("");
   const { addNotification, removeLastNotification } = useApp();
+  const { project, setProjectOrUndefined } = useProject();
 
   let timeoutId: NodeJS.Timeout | null = null;
 
   useEffect(() => {
+    console.log(project);
+    if (project) {
+      fillUpForm(project);
+    }
+
     return () => {
-      console.log("llegamos aqui");
-      console.log(timeoutId);
       if (timeoutId) {
-        console.log("timeout");
-        console.log(timeoutId);
         clearTimeout(timeoutId);
+        setProjectOrUndefined(undefined);
       }
     };
-   }, [timeoutId]);
+   }, [timeoutId, setProjectOrUndefined, project]);
 
   async function postProject(event: FormEvent<HTMLFormElement>) {
     dismissError();
@@ -69,6 +73,16 @@ const Admin = () => {
     return Math.floor((1 + Math.random()) * 0x100000000000)
     .toString(16)
     .substring(1);
+  }
+
+  function fillUpForm(project: Project) {
+    setErrorMsg("");
+    setSuccessMsg("");
+    setTitle(project.title);
+    setLink(project.link);
+    setDescription(project.description);
+    setTags(project.tag);
+    setVersion(project.version);
   }
 
   function resetForm() {

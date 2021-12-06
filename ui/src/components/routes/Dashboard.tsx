@@ -9,6 +9,8 @@ import ProjectCard from "../cards/ProjectCard";
 import { themes } from "../../styles/ColorStyles";
 import { MediumText } from "../../styles/TextStyles";
 import createApiClient from "../../api/api-client-factory";
+import useProject from "../../hooks/useProject";
+import { useHistory } from "react-router";
 
 interface Response {
   aboutme?: AboutMe;
@@ -19,7 +21,10 @@ const Dashboard = () => {
   const { t } = useTranslation();
   const [response, setResponse] = useState<Response | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
+  
   const { addNotification, removeLastNotification } = useApp();
+  const { setProjectOrUndefined } = useProject();
+  const history = useHistory();
 
   useEffect(() => {
     async function retrieveInfo() {
@@ -57,10 +62,11 @@ const Dashboard = () => {
     // TODO: Call to delete project
   }   
 
-  function updateProject(element: React.MouseEvent<HTMLElement>, id: string) {
+  function updateProject(element: React.MouseEvent<HTMLElement>, project: Project) {
     element.preventDefault()
     element.stopPropagation()
-    // TODO: Call to update project
+    setProjectOrUndefined(project);
+    history.push("/admin");
   }   
 
   return (
