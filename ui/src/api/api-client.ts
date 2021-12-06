@@ -39,4 +39,6 @@ export default interface ApiClient {
   getAboutMe(): Promise<AboutMe>;
   getProjects(): Promise<Project[]>;
   postProject(project: Project): Promise<ProjectResponse>;
+  updateProject(project: Project): Promise<ProjectResponse>;
+  deleteProject(projectId: string): Promise<ProjectResponse>;
 }
