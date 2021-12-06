@@ -15,7 +15,7 @@ import codeIcon from "./code.svg";
 interface ProjectCardProps {
   project: Project;
   closeButton: (element: React.MouseEvent<HTMLElement>, id: string) => void;
-  updateButton: (element: React.MouseEvent<HTMLElement>, id: string) => void;
+  updateButton: (element: React.MouseEvent<HTMLElement>, project: Project) => void;
   captionText?: string;
 }
 
@@ -52,7 +52,7 @@ const ProjectCard = (props: ProjectCardProps) => {
             <>
             <MenuDropDownOverlay onClick={toggleMenu}/>
             <MenuDropDown>
-            <MenuDropDownItem isWarning={false} onClick={(e: React.MouseEvent<HTMLElement>) => props.updateButton(e, project.id)}>Update</MenuDropDownItem>
+            <MenuDropDownItem isWarning={false} onClick={(e: React.MouseEvent<HTMLElement>) => props.updateButton(e, project)}>Update</MenuDropDownItem>
             <MenuDropDownItem isWarning={true} onClick={(e: React.MouseEvent<HTMLElement>) => props.closeButton(e, project.id)}>Delete</MenuDropDownItem>
             </MenuDropDown>
             </>
@@ -89,8 +89,12 @@ const KebabDot = styled.div`
   width: 4px;
   height: 4px;
   border-radius: 2px;
-  background: ${themes.dark.text1};
+  background: ${themes.light.text1};
   margin: 2px 0;
+
+  @media (prefers-color-scheme: dark) {
+    background: ${themes.dark.text1};
+  }
 `;
 
 const MenuDropDown = styled.div`
