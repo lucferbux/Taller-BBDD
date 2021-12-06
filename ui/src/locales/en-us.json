@@ -27,6 +27,7 @@
         "err_invalid_form": "Inputs must not be null",
         "err_network": "Error posting project",
         "suc_network": "Project posted",
+        "suc_network_update": "Project updated",
         "header": "Project Input",
         "input_title": "Title",
         "input_description": "Description",

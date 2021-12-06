@@ -1,5 +1,5 @@
 import * as Joi from '@hapi/joi';
-import AboutMeModel, { IProjectsModel } from './model';
+import ProjectModel, { IProjectsModel } from './model';
 import ProjectsValidation from './validation';
 import { IProjectsService } from './interface';
 import { Types } from 'mongoose';
@@ -15,7 +15,7 @@ const ProjectsService: IProjectsService = {
      */
     async findAll(): Promise<IProjectsModel[]> {
         try {
-            return await AboutMeModel.find({});
+            return await ProjectModel.find({});
         } catch (error) {
             throw new Error(error.message);
         }
@@ -38,7 +38,7 @@ const ProjectsService: IProjectsService = {
                 throw new Error(validate.error.message);
             }
 
-            return await AboutMeModel.findOne(
+            return await ProjectModel.findOne(
                 {
                     _id: Types.ObjectId(id),
                 },
@@ -52,7 +52,7 @@ const ProjectsService: IProjectsService = {
     },
 
     /**
-     * @param {IProjectsModel} user
+     * @param {IProjectsModel} project
      * @returns {Promise < IProjectsModel >}
      * @memberof ProjectsService
      */
@@ -64,9 +64,9 @@ const ProjectsService: IProjectsService = {
                 throw new Error(validate.error.message);
             }
 
-            const user: IProjectsModel = await AboutMeModel.create(body);
+            const project: IProjectsModel = await ProjectModel.create(body);
 
-            return user;
+            return project;
         } catch (error) {
             throw new Error(error.message);
         }
@@ -89,11 +89,12 @@ const ProjectsService: IProjectsService = {
                 throw new Error(validate.error.message);
             }
 
-            const user: IProjectsModel = await AboutMeModel.findOneAndRemove({
+            const project: IProjectsModel = await ProjectModel.findOneAndRemove({
                 _id: Types.ObjectId(id),
             });
+            
 
-            return user;
+            return project;
         } catch (error) {
             throw new Error(error.message);
         }

@@ -8,7 +8,7 @@ import { NextFunction } from 'express';
  * @interface IUserRequest
  */
 export interface IUserRequest {
-    id: string;
+    _id: string;
     email: string;
 }
 

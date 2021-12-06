@@ -48,7 +48,7 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
     try {
         const user: IUserModel = await AuthService.getUser(req.body);
 
-        const token: string = jwt.sign({ id: user.id, email: user.email }, app.get('secret'), {
+        const token: string = jwt.sign({ id: user._id, email: user.email }, app.get('secret'), {
             expiresIn: '60m',
         });
 
@@ -79,7 +79,7 @@ export async function login(req: Request, res: Response, next: NextFunction): Pr
  */
 export async function user(req: RequestWithUser, res: Response, next: NextFunction): Promise<void> {
     try {
-        const user: IUserModel = await UserService.findOne(req.user.id);
+        const user: IUserModel = await UserService.findOne(req.user._id);
 
         res.status(HttpStatus.OK)
             .send({ user });
