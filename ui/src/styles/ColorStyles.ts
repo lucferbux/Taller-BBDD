@@ -43,7 +43,7 @@ export const themes = {
         backgroundColor: `rgba(0, 0, 0, 0.4)`,
         boxShadow: `0px 30px 60px rgba(0, 0, 0, 0.25),
         inset 0 0 0 0.5px rgba(255, 255, 255, 0.2)`,
-        backgroundColorFull: `rgba(15, 14, 71, 1)`,
+        backgroundColorFull: `rgba(0, 0, 0, 1)`,
       },
       cardHover: {
         backgroundColor: `rgba(255, 255, 255, 0.1)`,
