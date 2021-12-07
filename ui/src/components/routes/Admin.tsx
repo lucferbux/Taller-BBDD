@@ -26,7 +26,6 @@ const Admin = () => {
 
     return () => {
       // TODO: 5) Clean up the project context when the component is unmounted
-      console.log(timeoutId);
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
