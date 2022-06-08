@@ -144,9 +144,9 @@ export default class HttpApiClient implements ApiClient {
       return response.json();
     }
 
-    // TODO: 2) Add updateProject using PUT method
+    // TODO: 1) Add updateProject using PUT method
 
-    // TODO: 2) Add updateProject using DELETE method
+    // TODO: 1) Add updateProject using DELETE method
 
   
 }

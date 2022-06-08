@@ -11,7 +11,7 @@ router.get('/', ProjectsComponent.findAll);
 
 router.post('/', jwtConfig.isAuthenticated, ProjectsComponent.create)
 
-// TODO: 6) Create a delete and update route
+// TODO: 5) Create a delete and update route
 
 /**
  * @export {express.Router}

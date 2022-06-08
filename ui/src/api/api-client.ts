@@ -39,6 +39,6 @@ export default interface ApiClient {
   getAboutMe(): Promise<AboutMe>;
   getProjects(): Promise<Project[]>;
   postProject(project: Project): Promise<ProjectResponse>;
-  // TODO: 2) Add updateProject with one argument passing the project object
-  // TODO: 2) Add deleteProject with one argument passing the project id
+  // TODO: 1) Add updateProject with one argument passing the project object
+  // TODO: 1) Add deleteProject with one argument passing the project id
 }

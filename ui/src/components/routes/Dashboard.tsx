@@ -22,7 +22,7 @@ const Dashboard = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   
   const { addNotification, removeLastNotification } = useApp();
-  // TODO: 4) Llama al hook useProject 
+  // TODO: 3) Llama al hook useProject 
 
   useEffect(() => {
     async function retrieveInfo() {
@@ -54,11 +54,11 @@ const Dashboard = () => {
     retrieveInfo();
   }, [setResponse, t, addNotification, removeLastNotification]);
 
-  // TODO: 4) Crea la función deleteProject
+  // TODO: 3) Crea la función deleteProject
   // HINT: el primer argumento debería ser element: React.MouseEvent<HTMLElement> para así llara a element.preventDefault() y element.stopPropagation()
   // HINT: Además de eliminar el proyecto, hay que refrescar la interfaz de React 
 
-  // TODO: 4) Crea la función deleteProject
+  // TODO: 3) Crea la función deleteProject
   // HINT: el primer argumento debería ser element: React.MouseEvent<HTMLElement> para así llara a element.preventDefault() y element.stopPropagation()
   // HINT: Además de añadir el proyecto al contexto, habrá que navegar a /admin de forma programática
  
@@ -73,7 +73,7 @@ const Dashboard = () => {
             </AboutMeWrapper>
             <ProjectWrapper>
               {response?.projects?.map((project, index) => (
-                // TODO: 4, Actualiza project card para añadir los props
+                // TODO: 3, Actualiza project card para añadir los props
                 <ProjectCard project={project} key={index} />
               ))}
             </ProjectWrapper>

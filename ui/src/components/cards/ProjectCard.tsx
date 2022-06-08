@@ -10,8 +10,8 @@ import {
 } from "../../styles/TextStyles";
 import codeIcon from "./code.svg";
 
-// TODO: 3) Add new propws, one for the closeButton and other for the updateButton
-// TODO: 3) HINT: for the first argument, pass element: React.MouseEvent<HTMLElement> to then call element.preventDefault(); and element.stopPropagation();
+// TODO: 2) Add new propws, one for the closeButton and other for the updateButton
+// TODO: 2) HINT: for the first argument, pass element: React.MouseEvent<HTMLElement> to then call element.preventDefault(); and element.stopPropagation();
 interface ProjectCardProps {
   project: Project;
   captionText?: string;
@@ -20,8 +20,8 @@ interface ProjectCardProps {
 const ProjectCard = (props: ProjectCardProps) => {
   const { project } = props;
   
-  // TODO: 3) Add useToggle hook to toggle the update button
-  // TODO: 3) Add useAuth hook to check the auth state
+  // TODO: 2) Add useToggle hook to toggle the update button
+  // TODO: 2) Add useAuth hook to check the auth state
 
   return (
     <Wrapper href={project.link} target="_blank" rel="noopener">
@@ -30,8 +30,8 @@ const ProjectCard = (props: ProjectCardProps) => {
           <CardVersion>
             <CardVersionText>{project.version}</CardVersionText>
           </CardVersion>
-          {/* TODO: 3) Add Kebab Button only when user is autenticated  */}
-          {/* TODO: 3) HINT: To Add 3 dots just do the following
+          {/* TODO: 2) Add Kebab Button only when user is autenticated  */}
+          {/* TODO: 2) HINT: To Add 3 dots just do the following
             <KebabButton [whatever you need here]>
               <KebabDot />
               <KebabDot />
@@ -39,7 +39,7 @@ const ProjectCard = (props: ProjectCardProps) => {
             </KebabButton>      
           */}
         </CardInfo>
-        {/* TODO: 3) Add Menu only when user is autenticated and menu is toggled (menu is outside CardInfo) */}
+        {/* TODO: 2) Add Menu only when user is autenticated and menu is toggled (menu is outside CardInfo) */}
         <CardCaption data-testid="caption">
           {props.captionText ? props.captionText : ""}
         </CardCaption>

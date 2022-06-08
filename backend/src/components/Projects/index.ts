@@ -54,7 +54,7 @@ export async function create(req: Request, res: Response, next: NextFunction): P
     }
 }
 
-// TODO: 6) Create a update method
+// TODO: 5) Create a update method
 // HINT: This could be done in several ways, one straighfowrard way is to remove the old object and create a new one with the modified data.
 
 /**
