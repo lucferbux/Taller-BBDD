@@ -4,21 +4,12 @@ import styled from "styled-components";
 import WaveLanding from "../background/WaveLanding";
 import { themes } from "../../styles/ColorStyles";
 import { H1 } from "../../styles/TextStyles";
-import Lottie from 'react-lottie';
+import Lottie from "lottie-react";
 import animationData from "./landing.json"
 
 const LandingPage = () => {
 
     const { t } = useTranslation();
-
-    const defaultOptions = {
-      loop: true,
-      autoplay: true, 
-      animationData: animationData,
-      rendererSettings: {
-        preserveAspectRatio: 'xMidYMid slice'
-      }
-    };
 
     return(
         <Wrapper>
@@ -28,13 +19,14 @@ const LandingPage = () => {
             </ContentWrapper>
             <LottieWrapper>
               <Lottie 
-                options={defaultOptions}
+                animationData={animationData} loop={true}
                 />
             </LottieWrapper>
         </Wrapper>   
     )
 
 }
+
 
 const Wrapper = styled.div`
   overflow: hidden;
