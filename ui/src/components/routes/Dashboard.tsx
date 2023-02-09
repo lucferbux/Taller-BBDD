@@ -22,7 +22,7 @@ const Dashboard = () => {
   const [error, setError] = useState<string | undefined>(undefined);
   
   const { addNotification, removeLastNotification } = useApp();
-  // TODO: 3) Llama al hook useProject 
+  // TODO: 3) Import the hook useProject 
 
   useEffect(() => {
     async function retrieveInfo() {
@@ -54,13 +54,13 @@ const Dashboard = () => {
     retrieveInfo();
   }, [setResponse, t, addNotification, removeLastNotification]);
 
-  // TODO: 3) Crea la función deleteProject
-  // HINT: el primer argumento debería ser element: React.MouseEvent<HTMLElement> para así llara a element.preventDefault() y element.stopPropagation()
-  // HINT: Además de eliminar el proyecto, hay que refrescar la interfaz de React 
+  // TODO: 3) Create the function deleteProject
+  // HINT: first argument should be: React.MouseEvent<HTMLElement> to call element.preventDefault() and element.stopPropagation()
+  // HINT: On top of deleting the document, we need to refresh the interface
 
-  // TODO: 3) Crea la función deleteProject
-  // HINT: el primer argumento debería ser element: React.MouseEvent<HTMLElement> para así llara a element.preventDefault() y element.stopPropagation()
-  // HINT: Además de añadir el proyecto al contexto, habrá que navegar a /admin de forma programática
+  // TODO: 3) Create the function deleteProject
+  // HINT: first argument should be: React.MouseEvent<HTMLElement> to call element.preventDefault() and element.stopPropagation()
+  // HINT: On top of adding the document, we need to navigate to /admin
  
 
   return (
@@ -73,7 +73,7 @@ const Dashboard = () => {
             </AboutMeWrapper>
             <ProjectWrapper>
               {response?.projects?.map((project, index) => (
-                // TODO: 3, Actualiza project card para añadir los props
+                // TODO: 3, Update project card with props
                 <ProjectCard project={project} key={index} />
               ))}
             </ProjectWrapper>

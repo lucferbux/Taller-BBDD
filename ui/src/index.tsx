@@ -7,6 +7,7 @@ import { AppProvider } from "./context/AppContext/AppContext";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { HelmetProvider } from "react-helmet-async";
+import { ProjectProvider } from "./context/ProjectContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,7 +18,9 @@ root.render(
     <HelmetProvider>
       <AuthProvider>
         <AppProvider>
-          <App />
+          <ProjectProvider>
+            <App />
+          </ProjectProvider>
         </AppProvider>
       </AuthProvider>
     </HelmetProvider>
