@@ -19,7 +19,7 @@ interface ProjectCardProps {
 
 const ProjectCard = (props: ProjectCardProps) => {
   const { project } = props;
-  
+
   // TODO: 2) Add useToggle hook to toggle the update button
   // TODO: 2) Add useAuth hook to check the auth state
 

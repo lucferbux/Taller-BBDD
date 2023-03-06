@@ -67,7 +67,7 @@ const getAuthorizationHeader = () => {
   if (accessToken) {
     return "Bearer " + accessToken;
   } else {
-    throw new Unauthorized();
+    throw Object.assign(new Error("Unauthorized"), { code: 402 });
   }
 };
 
@@ -81,8 +81,8 @@ export default class HttpApiClient implements ApiClient {
   async token(email: string, password: string): Promise<TokenResponse> {
     const body = new URLSearchParams({
       email: email,
-      password: password
-    })
+      password: password,
+    });
     const response = await fetch(this.baseUrl + "/auth/login", {
       method: "POST",
       body: body,
@@ -93,18 +93,14 @@ export default class HttpApiClient implements ApiClient {
     return response.json();
   }
 
-
   getAboutMe = (): Promise<AboutMe> =>
     handleResponse(async () => {
-      const response = await fetch(
-        this.baseUrl + `/v1/aboutme/`,
-        {
-          method: "GET",
-          headers: {
-            //Authorization: getAuthorizationHeader()
-          }
-        }
-      );
+      const response = await fetch(this.baseUrl + `/v1/aboutme/`, {
+        method: "GET",
+        headers: {
+          //Authorization: getAuthorizationHeader()
+        },
+      });
       if (!response.ok) {
         throw await createApiError(response);
       }
@@ -113,40 +109,35 @@ export default class HttpApiClient implements ApiClient {
 
   getProjects = (): Promise<Project[]> =>
     handleResponse(async () => {
-      const response = await fetch(
-        this.baseUrl + `/v1/projects/`,
-        {
-          method: "GET",
-          headers: {
-            //Authorization: getAuthorizationHeader()
-          }
-        }
-      );
+      const response = await fetch(this.baseUrl + `/v1/projects/`, {
+        method: "GET",
+        headers: {
+          //Authorization: getAuthorizationHeader()
+        },
+      });
       if (!response.ok) {
         throw await createApiError(response);
       }
       return response.json();
     });
 
-    async postProject(project: Project): Promise<ProjectResponse> {
-      const response = await fetch(this.baseUrl + "/v1/projects", {
-        method: "POST",
-        headers: {
-          Authorization: getAuthorizationHeader(),
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(project),
-      });
-      if (!response.ok) {
-        throw await createApiError(response);
-      }
-      return response.json();
+  async postProject(project: Project): Promise<ProjectResponse> {
+    const response = await fetch(this.baseUrl + "/v1/projects", {
+      method: "POST",
+      headers: {
+        Authorization: getAuthorizationHeader(),
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(project),
+    });
+    if (!response.ok) {
+      throw await createApiError(response);
     }
+    return response.json();
+  }
 
-    // TODO: 1) Add updateProject using PUT method
+  // TODO: 1) Add updateProject using PUT method
 
-    // TODO: 1) Add updateProject using DELETE method
-
-  
+  // TODO: 1) Add updateProject using DELETE method
 }

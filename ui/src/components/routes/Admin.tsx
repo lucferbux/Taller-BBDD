@@ -17,7 +17,9 @@ const Admin = () => {
   const [version, setVersion] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [sucessMsg, setSuccessMsg] = useState("");
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(undefined);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(
+    undefined
+  );
   const { addNotification, removeLastNotification } = useApp();
   // TODO: 4) Call the useProject() hook
 
@@ -61,10 +63,10 @@ const Admin = () => {
       removeLastNotification();
       resetForm();
       const timeOut = setTimeout(() => {
-        removeMessages()
+        removeMessages();
       }, 2000);
       setTimeoutId(timeOut);
-      // TODO: 4) Clean up the project context 
+      // TODO: 4) Clean up the project context
     }
   }
 

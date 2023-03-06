@@ -10,7 +10,6 @@ import { themes } from "../../styles/ColorStyles";
 import { MediumText } from "../../styles/TextStyles";
 import createApiClient from "../../api/api-client-factory";
 
-
 interface Response {
   aboutme?: AboutMe;
   projects?: Project[];
@@ -20,9 +19,9 @@ const Dashboard = () => {
   const { t } = useTranslation();
   const [response, setResponse] = useState<Response | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
-  
+
   const { addNotification, removeLastNotification } = useApp();
-  // TODO: 3) Import the hook useProject 
+  // TODO: 3) Import the hook useProject
 
   useEffect(() => {
     async function retrieveInfo() {
@@ -32,7 +31,7 @@ const Dashboard = () => {
         const projects: Project[] = await api.getProjects();
         const aboutme: AboutMe = await api.getAboutMe();
         setResponse({ aboutme, projects });
-      } catch(Error) {
+      } catch (Error) {
         setError("Info not found");
       } finally {
         stopSearch();
@@ -44,12 +43,10 @@ const Dashboard = () => {
       setError(undefined);
       addNotification(msg);
     }
-  
+
     function stopSearch() {
       removeLastNotification();
     }
-
-    
 
     retrieveInfo();
   }, [setResponse, t, addNotification, removeLastNotification]);
@@ -61,7 +58,6 @@ const Dashboard = () => {
   // TODO: 3) Create the function deleteProject
   // HINT: first argument should be: React.MouseEvent<HTMLElement> to call element.preventDefault() and element.stopPropagation()
   // HINT: On top of adding the document, we need to navigate to /admin
- 
 
   return (
     <Wrapper>
@@ -139,7 +135,7 @@ const ProjectWrapper = styled.div`
     grid-template-columns: auto auto;
   }
 
-  @media (max-width: 1080px) {  
+  @media (max-width: 1080px) {
     grid-template-columns: auto auto auto;
     gap: 20px;
   }
