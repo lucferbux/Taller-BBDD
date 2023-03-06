@@ -12,10 +12,11 @@
   ],
   "scripts": {
     "start": "node build/index.js",
+    "start:dev": "nodemon",
     "dev": "nodemon",
     "build": "tsc",
-    "postinstall": "npm run build",
-    "lint": "tslint -p tsconfig.json --fix"
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix"
   },
   "files": [
     "src"
@@ -51,23 +52,28 @@
     "@types/helmet": "^0.0.42",
     "@types/jsonwebtoken": "^8.3.4",
     "@types/module-alias": "^2.0.0",
-    "@types/mongoose": "^5.5.23",
     "@types/node": "^10.17.0",
     "@types/supertest": "^2.0.8",
-    "@types/swagger-jsdoc": "^0.0.2",
     "@types/swagger-ui-express": "^3.0.1",
     "chai": "^4.2.0",
     "jsdoc": "^3.6.3",
     "mocha": "^6.2.2",
-    "nodemon": "^1.19.4",
-    "source-map-loader": "^0.2.4",
     "supertest": "^4.0.2",
-    "swagger-jsdoc": "^3.4.0",
+    "nodemon": "^2.0.9",
+    "source-map-loader": "^0.2.4",
+    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.1.2",
-    "ts-node": "^6.2.0",
-    "tslint": "^5.20.0",
-    "tslint-config-airbnb": "^5.11.2",
-    "tslint-eslint-rules": "^5.4.0",
-    "typescript": "^3.6.3"
+    "ts-node": "^10.2.0",
+    "typescript": "^4.8.4",
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.11.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^16.1.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0"
   }
 }

@@ -30,7 +30,7 @@ export type AuthToken = {
 };
 
 
-const AboutMeSchema: Schema = new Schema(
+const AboutMeSchema = new Schema<IAboutMeModel>(
     {
         id: {
             type: String,

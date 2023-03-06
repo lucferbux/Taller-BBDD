@@ -34,7 +34,7 @@ export type AuthToken = {
 };
 
 
-const UserSchema: Schema = new Schema(
+const UserSchema = new Schema<IUserModel>(
     {
         email: {
             type: String,

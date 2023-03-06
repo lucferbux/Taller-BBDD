@@ -31,7 +31,7 @@ export type AuthToken = {
 };
 
 
-const ProjectsSchema: Schema = new Schema(
+const ProjectsSchema = new Schema<IProjectsModel>(
     {
         id: {
             type: String,
