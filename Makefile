@@ -51,7 +51,7 @@ install-ui:
 
 .PHONY: install-backend
 install-backend:
-	cd backend && npm install
+	cd api && npm install
 
 .PHONY: install-dependencies
 install-dependencies: install-ui install-backend
