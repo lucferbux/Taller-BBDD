@@ -1,13 +1,13 @@
-import * as connections from '@/config/connection/connection';
-import { Document, Schema } from 'mongoose';
+import * as connections from "@/config/connection/connection";
+import { Document, Schema } from "mongoose";
 
 /**
  * @export
  * @interface IProjectsRequest
  */
 export interface IProjectsRequest {
-    id: string;
-    title: string;
+  id: string;
+  title: string;
 }
 
 /**
@@ -16,40 +16,41 @@ export interface IProjectsRequest {
  * @extends {Document}
  */
 export interface IProjectsModel extends Document {
-    id: string;
-    title: string;
-    description: string;
-    version: string;
-    link: string;
-    tag: string;
-    timestamp: number;
+  id: string;
+  title: string;
+  description: string;
+  version: string;
+  link: string;
+  tag: string;
+  timestamp: number;
 }
 
 export type AuthToken = {
-    accessToken: string;
-    kind: string;
+  accessToken: string;
+  kind: string;
 };
 
-
 const ProjectsSchema = new Schema<IProjectsModel>(
-    {
-        id: {
-            type: String,
-            unique: true,
-            trim: true,
-        },
-        title: String,
-        description: String,
-        version: String,
-        link: String,
-        tag: String,
-        timestamp: Number,
+  {
+    id: {
+      type: String,
+      unique: true,
+      trim: true,
     },
-    {
-        collection: 'projects',
-        versionKey: false,
-    }
-)
+    title: String,
+    description: String,
+    version: String,
+    link: String,
+    tag: String,
+    timestamp: Number,
+  },
+  {
+    collection: "projects",
+    versionKey: false,
+  }
+);
 
-
-export default connections.db.model<IProjectsModel>('ProjectsModel', ProjectsSchema);
+export default connections.db.model<IProjectsModel>(
+  "ProjectsModel",
+  ProjectsSchema
+);

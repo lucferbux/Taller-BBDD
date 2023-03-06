@@ -1,13 +1,13 @@
-import * as connections from '@/config/connection/connection';
-import { Document, Schema } from 'mongoose';
+import * as connections from "@/config/connection/connection";
+import { Document, Schema } from "mongoose";
 
 /**
  * @export
  * @interface IAboutMeRequest
  */
 export interface IAboutMeRequest {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 }
 
 /**
@@ -16,38 +16,39 @@ export interface IAboutMeRequest {
  * @extends {Document}
  */
 export interface IAboutMeModel extends Document {
-    id: string;
-    name: string;
-    birthday: number;
-    nationality: string;
-    job: string;
-    github: string;
+  id: string;
+  name: string;
+  birthday: number;
+  nationality: string;
+  job: string;
+  github: string;
 }
 
 export type AuthToken = {
-    accessToken: string;
-    kind: string;
+  accessToken: string;
+  kind: string;
 };
 
-
 const AboutMeSchema = new Schema<IAboutMeModel>(
-    {
-        id: {
-            type: String,
-            unique: true,
-            trim: true,
-        },
-        name: String,
-        birthday: Number,
-        nationality: String,
-        job: String,
-        github: String
+  {
+    id: {
+      type: String,
+      unique: true,
+      trim: true,
     },
-    {
-        collection: 'profile',
-        versionKey: false,
-    }
-)
+    name: String,
+    birthday: Number,
+    nationality: String,
+    job: String,
+    github: String,
+  },
+  {
+    collection: "profile",
+    versionKey: false,
+  }
+);
 
-
-export default connections.db.model<IAboutMeModel>('AboutMeModel', AboutMeSchema);
+export default connections.db.model<IAboutMeModel>(
+  "AboutMeModel",
+  AboutMeSchema
+);
