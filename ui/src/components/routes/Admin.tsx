@@ -1,25 +1,23 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import styled from "styled-components";
-import createApiClient from "../../api/api-client-factory";
-import useApp from "../../hooks/useApp";
-import { Project } from "../../model/project";
-import { themes } from "../../styles/ColorStyles";
-import { Caption, H1 } from "../../styles/TextStyles";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+import createApiClient from '../../api/api-client-factory';
+import useApp from '../../hooks/useApp';
+import { Project } from '../../model/project';
+import { themes } from '../../styles/ColorStyles';
+import { Caption, H1 } from '../../styles/TextStyles';
 
 const Admin = () => {
   const { t } = useTranslation();
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [link, setLink] = useState("");
-  const [tags, setTags] = useState("");
-  const [version, setVersion] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [sucessMsg, setSuccessMsg] = useState("");
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(
-    undefined
-  );
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [link, setLink] = useState('');
+  const [tags, setTags] = useState('');
+  const [version, setVersion] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [sucessMsg, setSuccessMsg] = useState('');
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(undefined);
   const { addNotification, removeLastNotification } = useApp();
   // TODO: 4) Call the useProject() hook
 
@@ -38,7 +36,7 @@ const Admin = () => {
     dismissError();
     event.preventDefault();
     if (!readyToSubmit()) {
-      setErrorMsg(t("admin.err_invalid_form"));
+      setErrorMsg(t('admin.err_invalid_form'));
       return;
     }
     const api = createApiClient();
@@ -51,14 +49,14 @@ const Admin = () => {
         link: link,
         tag: tags,
         version: version,
-        timestamp: Date.now(),
+        timestamp: Date.now()
       };
-      addNotification("Posting...");
+      addNotification('Posting...');
       // TODO: 4) call update if it's an update or post if its a creation
       await api.postProject(projectCreation);
-      setSuccessMsg(t("admin.suc_network"));
+      setSuccessMsg(t('admin.suc_network'));
     } catch (e) {
-      setErrorMsg(t("admin.err_network"));
+      setErrorMsg(t('admin.err_network'));
     } finally {
       removeLastNotification();
       resetForm();
@@ -73,20 +71,20 @@ const Admin = () => {
   // TODO: 4) Create a function to fill the form
 
   function resetForm() {
-    setTitle("");
-    setLink("");
-    setDescription("");
-    setTags("");
-    setVersion("");
+    setTitle('');
+    setLink('');
+    setDescription('');
+    setTags('');
+    setVersion('');
   }
 
   function removeMessages() {
-    setErrorMsg("");
-    setSuccessMsg("");
+    setErrorMsg('');
+    setSuccessMsg('');
   }
 
   function onChangeAnyInput() {
-    setErrorMsg("");
+    setErrorMsg('');
   }
 
   function onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
@@ -115,52 +113,52 @@ const Admin = () => {
   }
 
   function readyToSubmit(): boolean {
-    return title !== "" && description !== "" && tags !== "" && version !== "";
+    return title !== '' && description !== '' && tags !== '' && version !== '';
   }
 
   function dismissError() {
-    setErrorMsg("");
+    setErrorMsg('');
   }
 
   return (
     <Wrapper>
       <ContentWrapper>
-        <TitleForm>{t("admin.header")}</TitleForm>
+        <TitleForm>{t('admin.header')}</TitleForm>
         <LoginPannel onSubmit={postProject} onReset={resetForm}>
           {errorMsg && <ErrorDescription>{errorMsg}</ErrorDescription>}
           {sucessMsg && <SuccessDescription>{sucessMsg}</SuccessDescription>}
           <LoginForm
             name="title"
             type="text"
-            placeholder={t("admin.input_title")}
+            placeholder={t('admin.input_title')}
             value={title}
             onChange={onChangeTitle}
           />
           <LoginForm
             name="description"
             type="text"
-            placeholder={t("admin.input_description")}
+            placeholder={t('admin.input_description')}
             value={description}
             onChange={onChangeDescription}
           />
           <LoginForm
             name="link"
             type="text"
-            placeholder={t("admin.input_link")}
+            placeholder={t('admin.input_link')}
             value={link}
             onChange={onChangeLink}
           />
           <LoginForm
             name="tags"
             type="text"
-            placeholder={t("admin.input_tags")}
+            placeholder={t('admin.input_tags')}
             value={tags}
             onChange={onChangeTags}
           />
           <LoginForm
             name="version"
             type="text"
-            placeholder={t("admin.input_version")}
+            placeholder={t('admin.input_version')}
             value={version}
             onChange={onChangeVersion}
           />
@@ -168,17 +166,13 @@ const Admin = () => {
             <ButtonCancel
               type="reset"
               value={
-                t("admin.button_delete") != null
-                  ? (t("admin.button_delete") as string)
-                  : "Delete"
+                t('admin.button_delete') != null ? (t('admin.button_delete') as string) : 'Delete'
               }
             />
             <ButtonForm
               type="submit"
               value={
-                t("admin.button_accept") != null
-                  ? (t("admin.button_accept") as string)
-                  : "Publish"
+                t('admin.button_accept') != null ? (t('admin.button_accept') as string) : 'Publish'
               }
             />
           </ButtonWrapper>

@@ -1,14 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import { Project } from "../../model/project";
-import { themes } from "../../styles/ColorStyles";
-import {
-  H3,
-  DescriptionCard,
-  SmallText,
-  SmallText2,
-} from "../../styles/TextStyles";
-import codeIcon from "./code.svg";
+import React from 'react';
+import styled from 'styled-components';
+import { Project } from '../../model/project';
+import { themes } from '../../styles/ColorStyles';
+import { H3, DescriptionCard, SmallText, SmallText2 } from '../../styles/TextStyles';
+import codeIcon from './code.svg';
 
 // TODO: 2) Add new props, one for the closeButton and other for the updateButton
 // TODO: 2) HINT: for the first argument, pass element: React.MouseEvent<HTMLElement> to then call element.preventDefault(); and element.stopPropagation();
@@ -41,7 +36,7 @@ const ProjectCard = (props: ProjectCardProps) => {
         </CardInfo>
         {/* TODO: 2) Add Menu only when user is authenticated and menu is toggled (menu is outside CardInfo) */}
         <CardCaption data-testid="caption">
-          {props.captionText ? props.captionText : ""}
+          {props.captionText ? props.captionText : ''}
         </CardCaption>
         <CardTitle>{project.title}</CardTitle>
         <CardDescription>{project.description}</CardDescription>

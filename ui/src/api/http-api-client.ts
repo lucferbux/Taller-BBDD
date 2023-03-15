@@ -9,16 +9,14 @@ import ApiClient, {
   ProjectResponse,
   TokenResponse,
   Unauthorized,
-  UnprocessableEntity,
-} from "./api-client";
+  UnprocessableEntity
+} from './api-client';
 
-import { getAccessToken, removeAuthToken } from "../utils/auth";
-import { Project } from "../model/project";
-import { AboutMe } from "../model/aboutme";
+import { getAccessToken, removeAuthToken } from '../utils/auth';
+import { Project } from '../model/project';
+import { AboutMe } from '../model/aboutme';
 
-async function createApiError(
-  response: Response | XMLHttpRequest
-): Promise<ApiError> {
+async function createApiError(response: Response | XMLHttpRequest): Promise<ApiError> {
   switch (response.status) {
     case 400:
       return new BadRequest();
@@ -33,10 +31,7 @@ async function createApiError(
     case 415:
     case 422:
       try {
-        const detail =
-          "json" in response
-            ? (await response.json()).detail
-            : response.responseText;
+        const detail = 'json' in response ? (await response.json()).detail : response.responseText;
         return new UnprocessableEntity(detail);
       } catch (e) {
         return new UnprocessableEntity();
@@ -46,7 +41,7 @@ async function createApiError(
   }
   return new GenericError(
     response.status,
-    "text" in response ? await response.text() : response.responseText
+    'text' in response ? await response.text() : response.responseText
   );
 }
 
@@ -56,7 +51,7 @@ const handleResponse = async <T>(func: () => Promise<T>): Promise<T> => {
   } catch (e) {
     if (e instanceof Unauthorized) {
       removeAuthToken();
-      window.location.replace("/");
+      window.location.replace('/');
     }
     throw e;
   }
@@ -65,9 +60,9 @@ const handleResponse = async <T>(func: () => Promise<T>): Promise<T> => {
 const getAuthorizationHeader = () => {
   const accessToken = getAccessToken();
   if (accessToken) {
-    return "Bearer " + accessToken;
+    return 'Bearer ' + accessToken;
   } else {
-    throw Object.assign(new Error("Unauthorized"), { code: 402 });
+    throw Object.assign(new Error('Unauthorized'), { code: 402 });
   }
 };
 
@@ -81,11 +76,11 @@ export default class HttpApiClient implements ApiClient {
   async token(email: string, password: string): Promise<TokenResponse> {
     const body = new URLSearchParams({
       email: email,
-      password: password,
+      password: password
     });
-    const response = await fetch(this.baseUrl + "/auth/login", {
-      method: "POST",
-      body: body,
+    const response = await fetch(this.baseUrl + '/auth/login', {
+      method: 'POST',
+      body: body
     });
     if (!response.ok) {
       throw await createApiError(response);
@@ -96,10 +91,10 @@ export default class HttpApiClient implements ApiClient {
   getAboutMe = (): Promise<AboutMe> =>
     handleResponse(async () => {
       const response = await fetch(this.baseUrl + `/v1/aboutme/`, {
-        method: "GET",
+        method: 'GET',
         headers: {
           //Authorization: getAuthorizationHeader()
-        },
+        }
       });
       if (!response.ok) {
         throw await createApiError(response);
@@ -110,10 +105,10 @@ export default class HttpApiClient implements ApiClient {
   getProjects = (): Promise<Project[]> =>
     handleResponse(async () => {
       const response = await fetch(this.baseUrl + `/v1/projects/`, {
-        method: "GET",
+        method: 'GET',
         headers: {
           //Authorization: getAuthorizationHeader()
-        },
+        }
       });
       if (!response.ok) {
         throw await createApiError(response);
@@ -122,14 +117,14 @@ export default class HttpApiClient implements ApiClient {
     });
 
   async postProject(project: Project): Promise<ProjectResponse> {
-    const response = await fetch(this.baseUrl + "/v1/projects", {
-      method: "POST",
+    const response = await fetch(this.baseUrl + '/v1/projects', {
+      method: 'POST',
       headers: {
         Authorization: getAuthorizationHeader(),
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(project),
+      body: JSON.stringify(project)
     });
     if (!response.ok) {
       throw await createApiError(response);
