@@ -2,6 +2,7 @@ import * as Joi from 'joi';
 import AuthValidation from './validation';
 import UserModel, { IUserModel } from '@/components/User/model';
 import { IAuthService } from './interface';
+import { DocumentDefinition } from 'mongoose';
 
 /**
  * @export
@@ -13,7 +14,7 @@ const AuthService: IAuthService = {
    * @returns {Promise <IUserModel>}
    * @memberof AuthService
    */
-  async createUser(body: IUserModel): Promise<IUserModel> {
+  async createUser(body: DocumentDefinition<IUserModel>): Promise<IUserModel> {
     try {
       const validate: Joi.ValidationResult<IUserModel> = AuthValidation.createUser(body);
 

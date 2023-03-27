@@ -1,4 +1,4 @@
-import * as HttpStatus from 'http-status-codes';
+import HttpStatus from 'http-status-codes';
 import * as jwt from 'jsonwebtoken';
 import { NextFunction, Request, Response } from 'express';
 import { IUserModel, IUserRequest } from '@/components/User/model';
