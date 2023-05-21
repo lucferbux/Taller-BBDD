@@ -1,4 +1,4 @@
-import * as Joi from 'joi';
+import Joi from 'joi';
 import AuthValidation from './validation';
 import UserModel, { IUserModel } from '@/components/User/model';
 import { IAuthService } from './interface';

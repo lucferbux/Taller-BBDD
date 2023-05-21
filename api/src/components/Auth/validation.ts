@@ -1,4 +1,4 @@
-import * as Joi from 'joi';
+import Joi from 'joi';
 import Validation from '@/components/validation';
 import { IUserModel } from '@/components/User/model';
 import { DocumentDefinition } from 'mongoose';
