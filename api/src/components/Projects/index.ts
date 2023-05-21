@@ -54,8 +54,24 @@ export async function create(req: Request, res: Response, next: NextFunction): P
   }
 }
 
-// TODO: 5) Create a update method
-// HINT: This could be done in several ways, one straighfowrard way is to remove the old object and create a new one with the modified data.
+/**
+ * @export
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Promise < void >}
+ */
+export async function update(req: Request, res: Response, next: NextFunction): Promise<void> {
+  try {
+    await ProjectsService.remove(req.body._id);
+    delete req.body._id;
+    const aboutMe: IProjectsModel = await ProjectsService.insert(req.body);
+
+    res.status(201).json(aboutMe);
+  } catch (error) {
+    next(new HttpError(error.message.status, error.message));
+  }
+}
 
 /**
  * @export

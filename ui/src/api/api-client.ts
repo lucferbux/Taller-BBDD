@@ -48,5 +48,8 @@ export default interface ApiClient {
   getDashboardInfo(): Promise<DashboardInfo>;
   postProject(project: Project): Promise<ProjectResponse>;
   // TODO: 2) Add updateProject with one argument passing the project object
-  // TODO: 2) Add deleteProject with one argument passing the project id
+  updateProject(project: Project): Promise<ProjectResponse>;
+  createOrUpdateProject(project: Project): Promise<ProjectResponse>;
+    // TODO: 2) Add deleteProject with one argument passing the project id
+  deleteProject(projectId: string): Promise<ProjectResponse>;
 }

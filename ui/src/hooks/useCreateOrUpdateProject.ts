@@ -2,20 +2,20 @@ import { useState, useCallback } from 'react';
 import { ProjectResponse } from '../api/api-client';
 
 type UpdateResult<T> = {
-  create: (data: T, errorMessage?: string) => Promise<void>;
+  createOrUpdate: (data: T, errorMessage?: string) => Promise<void>;
   status: Status;
   error: Error | undefined;
 };
 
 type Status = 'success' | 'loading' | undefined;
 
-export function useCreate<T>(
-  createFunction: (data: T) => Promise<ProjectResponse>
+export function useCreateOrUpdate<T>(
+  createOrUpdateFunction: (data: T) => Promise<ProjectResponse>
 ): UpdateResult<T> {
   const [status, setStatus] = useState<Status>(undefined);
   const [error, setError] = useState<Error | undefined>(undefined);
 
-  const create = useCallback(
+  const createOrUpdate = useCallback(
     async (data: T, errorMessage?: string) => {
       if (errorMessage) {
         setError(new Error(errorMessage));
@@ -23,7 +23,7 @@ export function useCreate<T>(
       }
       setStatus('loading');
       try {
-        await createFunction(data);
+        await createOrUpdateFunction(data);
         setStatus('success');
       } catch (err) {
         if (err instanceof Error) {
@@ -34,8 +34,8 @@ export function useCreate<T>(
         setStatus(undefined);
       }
     },
-    [createFunction]
+    [createOrUpdateFunction]
   );
 
-  return { create, status, error };
+  return { createOrUpdate, status, error };
 }

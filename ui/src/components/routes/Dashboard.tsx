@@ -7,6 +7,8 @@ import ProjectCard from '../cards/ProjectCard';
 import { themes } from '../../styles/ColorStyles';
 import { MediumText } from '../../styles/TextStyles';
 import createApiClient from '../../api/api-client-factory';
+import useProject from '../../hooks/useProject';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import Loader from '../elements/Loader';
 import useFetchData from '../../hooks/useFetchData';
@@ -18,10 +20,30 @@ const Dashboard = () => {
 
   const { user } = useAuth();
   // TODO: 4) Llama al hook useProject
+  const { addProject } = useProject();
+  const navigate = useNavigate();
 
   // TODO: 4) Crea la función deleteProject
   // HINT: el primer argumento debería ser element: React.MouseEvent<HTMLElement> para así llara a element.preventDefault() y element.stopPropagation()
   // HINT: Además de eliminar el proyecto, hay que refrescar la interfaz de React
+  async function deleteProject(element: React.MouseEvent<HTMLElement>, id: string) {
+    element.preventDefault();
+    element.stopPropagation();
+
+    try {
+      await apiClient.deleteProject(id);
+      reloadData();
+    } catch (e) {
+      console.log('Error deleting project', e);
+    }
+  }
+
+  function updateProject(element: React.MouseEvent<HTMLElement>, project: Project) {
+    element.preventDefault();
+    element.stopPropagation();
+    addProject(project);
+    navigate('/admin');
+  }
 
   if (isLoading) {
     return <Loader message="Loading data" />;
@@ -36,11 +58,6 @@ const Dashboard = () => {
       </Wrapper>
     );
   }
-
-  // TODO: 3) Create la función deleteProject
-  // HINT: first argument should be: React.MouseEvent<HTMLElement> to call element.preventDefault() and element.stopPropagation()
-  // HINT: On top of adding the document, we need to navigate to /admin
-
 
   return (
     <Wrapper>
@@ -57,6 +74,8 @@ const Dashboard = () => {
                   <ProjectCard
                     project={project}
                     key={index}
+                    closeButton={(e, id) => deleteProject(e, id)}
+                    updateButton={(e, id) => updateProject(e, id)}
                   />
                 ))}
             </ProjectWrapper>
