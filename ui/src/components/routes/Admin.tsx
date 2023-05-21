@@ -1,179 +1,130 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import createApiClient from '../../api/api-client-factory';
-import useApp from '../../hooks/useApp';
+import useProject from '../../hooks/useProject';
 import { Project } from '../../model/project';
 import { themes } from '../../styles/ColorStyles';
 import { Caption, H1 } from '../../styles/TextStyles';
+import { useCreate } from '../../hooks/useCreate';
+import Loader from '../elements/Loader';
+import { useNavigate } from 'react-router';
 
 const Admin = () => {
   const { t } = useTranslation();
+  const emptyProjectInput: Partial<Project> = {
+    title: '',
+    description: '',
+    link: '',
+    tag: '',
+    version: ''
+  };
 
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [link, setLink] = useState('');
-  const [tags, setTags] = useState('');
-  const [version, setVersion] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
-  const [sucessMsg, setSuccessMsg] = useState('');
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | undefined>(undefined);
-  const { addNotification, removeLastNotification } = useApp();
-  // TODO: 4) Call the useProject() hook
+  const navigate = useNavigate();
+  const apiClient = useMemo(() => createApiClient(), []);
+  // TODO: 5) Modify the hook to use create or update
+  const { create, status, error } = useCreate(apiClient.postProject);
+  const { project, removeProject } = useProject();
+
+  const [projectInput, setProjectInput] = useState<Partial<Project>>(project || emptyProjectInput);
+
+  const readyToSubmit =
+    projectInput.title !== '' &&
+    projectInput.description !== '' &&
+    projectInput.link !== '' &&
+    projectInput.tag !== '' &&
+    projectInput.version !== '';
 
   useEffect(() => {
-    // TODO: 4) Check if there's a project in context and fill the form (you can create a function for that)
-
+    if (status === 'success') {
+      removeProject();
+      navigate('/dashboard');
+    }
     return () => {
-      // TODO: 4) Clean up the project context when the component is unmounted
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+      removeProject();
     };
-  }, [timeoutId]);
+  }, [status, removeProject, navigate]);
 
   async function postProject(event: FormEvent<HTMLFormElement>) {
-    dismissError();
     event.preventDefault();
-    if (!readyToSubmit()) {
-      setErrorMsg(t('admin.err_invalid_form'));
-      return;
-    }
-    const api = createApiClient();
-    try {
-      // TODO: 4) Modify the project creation adding the _id and timestamp if it's an update
-      const projectCreation: Project = {
-        _id: undefined,
-        title: title,
-        description: description,
-        link: link,
-        tag: tags,
-        version: version,
-        timestamp: Date.now()
-      };
-      addNotification('Posting...');
-      // TODO: 4) call update if it's an update or post if its a creation
-      await api.postProject(projectCreation);
-      setSuccessMsg(t('admin.suc_network'));
-    } catch (e) {
-      setErrorMsg(t('admin.err_network'));
-    } finally {
-      removeLastNotification();
-      resetForm();
-      const timeOut = setTimeout(() => {
-        removeMessages();
-      }, 2000);
-      setTimeoutId(timeOut);
-      // TODO: 4) Clean up the project context
-    }
+    const errorMessage = !readyToSubmit ? t('admin.err_invalid_form') : undefined;
+    const newProject = {
+      ...projectInput,
+      title: projectInput?.title || '',
+      description: projectInput?.description || '',
+      tag: projectInput?.tag || '',
+      version: projectInput?.version || '',
+      link: projectInput?.link || '',
+      timestamp: projectInput?.timestamp || Date.now()
+    };
+
+    // TODO: 5) Call the create or update method
+    create(newProject, errorMessage);
   }
 
-  // TODO: 4) Create a function to fill the form
-
-  function resetForm() {
-    setTitle('');
-    setLink('');
-    setDescription('');
-    setTags('');
-    setVersion('');
+  function onChange(e: ChangeEvent<HTMLInputElement>, attribute: keyof Project) {
+    setProjectInput({ ...projectInput, [attribute]: e.target.value });
   }
 
-  function removeMessages() {
-    setErrorMsg('');
-    setSuccessMsg('');
-  }
-
-  function onChangeAnyInput() {
-    setErrorMsg('');
-  }
-
-  function onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
-    setTitle(e.target.value);
-    onChangeAnyInput();
-  }
-
-  function onChangeDescription(e: ChangeEvent<HTMLInputElement>) {
-    setDescription(e.target.value);
-    onChangeAnyInput();
-  }
-
-  function onChangeLink(e: ChangeEvent<HTMLInputElement>) {
-    setLink(e.target.value);
-    onChangeAnyInput();
-  }
-
-  function onChangeTags(e: ChangeEvent<HTMLInputElement>) {
-    setTags(e.target.value);
-    onChangeAnyInput();
-  }
-
-  function onChangeVersion(e: ChangeEvent<HTMLInputElement>) {
-    setVersion(e.target.value);
-    onChangeAnyInput();
-  }
-
-  function readyToSubmit(): boolean {
-    return title !== '' && description !== '' && tags !== '' && version !== '';
-  }
-
-  function dismissError() {
-    setErrorMsg('');
+  function onReset() {
+    removeProject();
+    setProjectInput(emptyProjectInput);
   }
 
   return (
     <Wrapper>
+      {status === 'loading' && <Loader message={t('loader.text')} />}
       <ContentWrapper>
         <TitleForm>{t('admin.header')}</TitleForm>
-        <LoginPannel onSubmit={postProject} onReset={resetForm}>
-          {errorMsg && <ErrorDescription>{errorMsg}</ErrorDescription>}
-          {sucessMsg && <SuccessDescription>{sucessMsg}</SuccessDescription>}
+        <LoginPannel onSubmit={postProject} onReset={onReset}>
+          {error && <ErrorDescription>{error.message}</ErrorDescription>}
           <LoginForm
             name="title"
             type="text"
             placeholder={t('admin.input_title')}
-            value={title}
-            onChange={onChangeTitle}
+            value={projectInput.title}
+            onChange={(e) => onChange(e, 'title')}
           />
           <LoginForm
             name="description"
             type="text"
             placeholder={t('admin.input_description')}
-            value={description}
-            onChange={onChangeDescription}
+            value={projectInput.description}
+            onChange={(e) => onChange(e, 'description')}
           />
           <LoginForm
             name="link"
             type="text"
             placeholder={t('admin.input_link')}
-            value={link}
-            onChange={onChangeLink}
+            value={projectInput.link}
+            onChange={(e) => onChange(e, 'link')}
           />
           <LoginForm
             name="tags"
             type="text"
             placeholder={t('admin.input_tags')}
-            value={tags}
-            onChange={onChangeTags}
+            value={projectInput.tag}
+            onChange={(e) => onChange(e, 'tag')}
           />
           <LoginForm
             name="version"
             type="text"
             placeholder={t('admin.input_version')}
-            value={version}
-            onChange={onChangeVersion}
+            value={projectInput.version}
+            onChange={(e) => onChange(e, 'version')}
           />
           <ButtonWrapper>
             <ButtonCancel
+              disabled={status === 'loading'}
               type="reset"
               value={
                 t('admin.button_delete') != null ? (t('admin.button_delete') as string) : 'Delete'
               }
             />
             <ButtonForm
+              disabled={status === 'loading' || !readyToSubmit}
               type="submit"
-              value={
-                t('admin.button_accept') != null ? (t('admin.button_accept') as string) : 'Publish'
-              }
+              value={project ? t('admin.button_accept_update') : t('admin.button_accept')}
             />
           </ButtonWrapper>
         </LoginPannel>
@@ -244,14 +195,6 @@ const ErrorDescription = styled(Caption)`
   color: ${themes.light.warning};
 `;
 
-const SuccessDescription = styled(Caption)`
-  color: ${themes.light.primary};
-
-  @media (prefers-color-scheme: dark) {
-    color: ${themes.dark.primary};
-  }
-`;
-
 const LoginForm = styled.input`
   border: none;
   border-radius: 3px;
@@ -286,6 +229,7 @@ const ButtonForm = styled.input`
   border: none;
   background-color: ${themes.light.primary};
   color: ${themes.dark.text1};
+  opacity: ${(props) => (props.disabled ? '0.5' : '1')};
 
   @media (prefers-color-scheme: dark) {
     background-color: ${themes.dark.primary};

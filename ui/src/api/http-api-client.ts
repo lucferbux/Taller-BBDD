@@ -4,6 +4,7 @@ import ApiClient, {
   Forbidden,
   GenericError,
   NotFound,
+  DashboardInfo,
   PreconditionFailed,
   PreconditionRequired,
   ProjectResponse,
@@ -116,7 +117,16 @@ export default class HttpApiClient implements ApiClient {
       return response.json();
     });
 
-  async postProject(project: Project): Promise<ProjectResponse> {
+  getDashboardInfo = (): Promise<DashboardInfo> => {
+    return Promise.all([this.getAboutMe(), this.getProjects()]).then(([aboutMe, projects]) => {
+      return {
+        aboutMe,
+        projects
+      };
+    });
+  };
+
+  postProject = async (project: Project): Promise<ProjectResponse> => {
     const response = await fetch(this.baseUrl + '/v1/projects', {
       method: 'POST',
       headers: {
@@ -130,7 +140,7 @@ export default class HttpApiClient implements ApiClient {
       throw await createApiError(response);
     }
     return response.json();
-  }
+  };
 
   // TODO: 1) Add updateProject using PUT method
 

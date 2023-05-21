@@ -36,11 +36,17 @@ export interface ProjectResponse {
   message: string;
 }
 
+export interface DashboardInfo {
+  aboutMe: AboutMe;
+  projects: Project[];
+}
+
 export default interface ApiClient {
   token(email: string, password: string): Promise<TokenResponse>;
   getAboutMe(): Promise<AboutMe>;
   getProjects(): Promise<Project[]>;
+  getDashboardInfo(): Promise<DashboardInfo>;
   postProject(project: Project): Promise<ProjectResponse>;
-  // TODO: 1) Add updateProject with one argument passing the project object
-  // TODO: 1) Add deleteProject with one argument passing the project id
+  // TODO: 2) Add updateProject with one argument passing the project object
+  // TODO: 2) Add deleteProject with one argument passing the project id
 }
