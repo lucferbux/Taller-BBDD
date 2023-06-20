@@ -18,7 +18,6 @@ const Dashboard = () => {
   const apiClient = useMemo(() => createApiClient(), []);
   const { data, isLoading, error, reload: reloadData } = useFetchData(apiClient.getDashboardInfo);
 
-  const { user } = useAuth();
   // TODO: 4) Llama al hook useProject
   const { addProject } = useProject();
   const navigate = useNavigate();
